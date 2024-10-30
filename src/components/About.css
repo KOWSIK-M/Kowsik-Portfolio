@@ -1,0 +1,434 @@
+@import url('https://fonts.googleapis.com/css2?family=Wendy+One&display=swap');
+
+@keyframes appear{
+  from{
+    opacity: 0;
+    scale: 0.5;
+  }
+  to{
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+.box {  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Make it full height to center vertically */
+  text-align: center;
+
+}
+
+h3 {
+  font-size:12vw;
+  white-space: nowrap;
+  line-height: 220px;
+  color: purple;
+  text-shadow: 0 10px 7px rgba(0,0,0,0.4),0 -10px 1px #fff;
+  letter-spacing: -3px;
+  
+  animation: appear linear;
+  animation-timeline: view();
+  animation-range: entry cover 55%;
+}
+
+h3:hover {
+  animation: glitch .3s linear infinite;
+  cursor: pointer;
+}
+
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    transform: translate(2px, 2px);
+  }
+  80% {
+    transform: translate(2px, -2px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+.card {
+  margin-left: 50%;
+  position: relative;
+  width: 300px;
+  height: 420px;
+  background: #f00;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  
+  animation: appear linear;
+  animation-timeline: view();
+  animation-range: entry cover 40%;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(315deg,#03a9f4,#ff0058);
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90%;
+  background: linear-gradient(315deg,#03a9f4,#ff0058);
+  filter: blur(30px);
+}
+
+.card b {
+  position: absolute;
+  inset: 6px;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 2;
+}
+
+.card img {
+  user-select: none;
+  width: 580px;
+  height: 820px;
+  z-index: 3;  
+  scale: 0.5;
+  opacity: 1;
+  transition: 0.5s;
+}
+
+.card:hover img {
+  border-radius: 10px;
+  scale: 0.6;
+  opacity: 1;
+  box-shadow: 0 4px 15px rgb(3, 168, 244), 0 8px 25px rgb(255, 0, 89);
+
+}
+
+.card .content {
+  position: absolute;
+  z-index: 3;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: scale(0);
+  transition: 0.5s;
+  
+}
+
+.card:hover .content {
+  transform: scale(1);
+  bottom: 25px;
+}
+
+.content .title {
+  position: relative;
+  color: #fff;
+  font-weight: 500;
+  line-height: 1em;
+  font-size: 1.2em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.content .title span {
+  font-weight: 300;
+  font-size: 0.70em;
+}
+
+.content .sci {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 5px;
+  margin-right: 40px;
+}
+
+.sci li {
+  list-style: none;
+}
+
+.sci li .fa-brands {
+  width: 14px;
+}
+
+.sci li .fa-facebook {
+  width: 10px;
+}
+
+.sci li a {
+  position: relative;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.5);
+  background: rgba(0, 0, 0, 0.2);
+  fill: currentColor;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  transition: 0.5s;
+}
+
+.sci li a:hover {
+  border: 1px solid #fff;
+  scale: 1.4;
+  fill: currentColor;
+  color: rgba(255, 255, 255, 1);
+}
+
+@keyframes appearleft{
+  from{
+    opacity: 0;
+    transform: translateX(250px);
+  }
+  to{
+    opacity: 1;
+    transform: translate(0px);
+  }
+}
+
+.card_container {
+  --X: 0deg;
+  --Y: 0deg;
+  --Z: 0deg;
+  --angleX: 15deg;
+  --angleY: 20deg;
+
+  cursor: pointer;
+  position: relative;
+
+  
+  animation: appearleft linear;
+  animation-timeline: view();
+  animation-range: entry cover 40%;
+}
+
+.card_hover {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  flex-wrap: wrap;
+  
+
+  width: 100%;
+  height: 100%;
+}
+
+.card_hover .part {
+  width: 20%;
+  height: calc(100% / 3);
+  background-color: transparent;
+}
+
+.card_container:has(.part-1:hover) {
+  --X: var(--angleX);
+  --Y: calc(var(--angleY) * -1);
+}
+.card_container:has(.part-2:hover) {
+  --X: var(--angleX);
+  --Y: calc((var(--angleY) / 2) * -1);
+}
+.card_container:has(.part-3:hover) {
+  --X: var(--angleX);
+}
+.card_container:has(.part-4:hover) {
+  --X: var(--angleX);
+  --Y: calc(var(--angleY) / 2);
+}
+.card_container:has(.part-5:hover) {
+  --X: var(--angleX);
+  --Y: var(--angleY);
+}
+.card_container:has(.part-6:hover) {
+  --Y: calc(var(--angleY) * -1);
+}
+.card_container:has(.part-7:hover) {
+  --Y: calc((var(--angleY) / 2) * -1);
+}
+.card_container:has(.part-9:hover) {
+  --Y: calc(var(--angleY) / 2);
+}
+.card_container:has(.part-10:hover) {
+  --Y: var(--angleY);
+}
+.card_container:has(.part-11:hover) {
+  --X: calc(var(--angleX) * -1);
+  --Y: calc(var(--angleY) * -1);
+}
+.card_container:has(.part-12:hover) {
+  --X: calc(var(--angleX) * -1);
+  --Y: calc((var(--angleY) / 2) * -1);
+}
+.card_container:has(.part-13:hover) {
+  --X: calc(var(--angleX) * -1);
+}
+.card_container:has(.part-14:hover) {
+  --X: calc(var(--angleX) * -1);
+  --Y: calc(var(--angleY) / 2);
+}
+.card_container:has(.part-15:hover) {
+  --X: calc(var(--angleX) * -1);
+  --Y: var(--angleY);
+}
+
+.card_info {
+  --light: #d9d9d9;
+  --dark: #1f1f1f;
+
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  padding: 1.5rem;
+  width: 15rem;
+  background-color: rgb(172, 250, 233);
+  background-image: linear-gradient(
+    135deg,
+    rgba(172, 250, 233, 1) 0%,
+    rgba(213, 143, 235, 1) 50%,
+    rgba(242, 126, 241, 1) 100%
+  );
+
+  border-radius: 0.5rem;
+
+  transform-origin: center;
+  transform: rotateX(var(--X)) rotateY(var(--Y)) rotateZ(var(--Z));
+  transition: transform 0.3s ease-in-out;
+}
+
+.say-hi {
+  position: relative;
+
+  width: 100%;
+  height: 2rem;
+  background-color: transparent;
+}
+
+.icon_say-hi {
+  position: absolute;
+  bottom: 0;
+  left: -0.5rem;
+
+  width: 3rem;
+
+  opacity: 0;
+  transform-origin: 60% 90%;
+  transform: translate(-15deg);
+  filter: drop-shadow(0 0 0.5rem #2b2b2b);
+  transition: all 0.2s ease-in-out;
+}
+
+.card_container:hover .card_info .icon_say-hi {
+  width: 3.5rem;
+
+  opacity: 1;
+  animation: say-hi 0.35s linear infinite alternate;
+}
+
+@keyframes say-hi {
+  to {
+    transform: rotate(25deg);
+  }
+}
+
+.title_info {
+  overflow: clip;
+
+  width: 100%;
+
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--dark);
+  text-transform: capitalize;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+}
+
+.paragraph {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--dark);
+}
+.aboutContent{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; 
+  margin-right: 40%;
+}
+
+.introduction {
+  font-family: 'Wendy One', sans-serif;
+  font-size: 1.5vw;
+  color: aquamarine; /* Matches the purple tone */
+  text-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3);
+  margin-top: 20px;
+  max-width: 60%;
+  margin-right: auto;
+  opacity: 0;
+  animation: appear 1.2s ease-out forwards; /* Fade in with appear animation */
+  line-height: 1.6;
+}
+
+.introduction p {
+  text-align: center;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .introduction {
+    font-size: 2.5vw;
+    max-width: 80%;
+  }
+}
+.side-popup {
+  position: fixed;
+  right: 20px;
+  top: 100px;
+  width: 200px;
+  padding: 10px;
+  background: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.side-popup h4 {
+  margin: 0 0 10px;
+}
+
+.side-popup a {
+  display: block;
+  margin: 5px 0;
+  color: blue;
+  text-decoration: underline;
+}
+
+.side-popup button {
+  margin-top: 10px;
+}

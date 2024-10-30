@@ -1,0 +1,79 @@
+.skills-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    color: #ecf39e;
+    background-color: #20232a; /* Black background */
+    min-height: 100vh;
+}
+
+.skills-card {
+    width: 50%;
+    max-width: 500px;
+    margin-top: 10vh;
+    background: #ecf39e;
+    padding: 20px;
+    color: #31572c;
+    border-radius: 15px;
+    box-shadow: -15px 15px 20px rgba(0, 0, 0, 0.3);
+}
+
+.title {
+    font-weight: bold;
+    font-size: 1.7em;
+    margin-bottom: 15px;
+}
+
+.card__tags {
+    overflow: auto;
+    height: 100%;
+}
+
+.tag__name {
+    display: inline-block;
+    color: #fff;
+    font-size: 1.1em;
+    background-color: #31572c;
+    padding: 6px 20px;
+    border-radius: 50px;
+    margin: 6px;
+    text-transform: lowercase;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.tag__name:hover {
+    transform: scale(1.1);
+    background-color: #51572c;
+}
+
+.badges-section {
+    width: 100%;
+    max-width: 600px;
+    margin-top: 50px;
+    text-align: center;
+}
+
+.badges-section h2 {
+    color: #ecf39e;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.badge {
+    display: inline-block;
+    margin: 10px;
+}
+
+/* iframe style */
+iframe {
+    border-radius: 20px;
+    border: 5px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.6), 0 0 40px rgba(0, 255, 255, 0.3);
+    transition: box-shadow 0.3s ease;
+}
+
+iframe:hover {
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.8), 0 0 60px rgba(0, 255, 255, 0.5);
+}

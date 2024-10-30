@@ -1,38 +1,50 @@
-.App {
-  text-align: center;
+/* You can add global styles to this file, and also import other style files */
+body{
+  background-color: rgb(0, 0, 0);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Home Section */
+.home {
+  transition: background 1s ease; /* Smooth background transition */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+
+
+/* Initial state for contact animations */
+.contact-container {
+  transform: translateY(50px);
+  transition: opacity 1s ease, transform 0.8s ease;
+}
+
+@keyframes bgappear{
+  from{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+/* Animate when scrolled to contact */
+.contact-container.animate {
+  opacity: 1;
+  background: repeating-radial-gradient(circle, #ea1d6f, #eb466b 5px, transparent 3px);
+  
+  background-size: 30px 30px;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.contact-container {
+  background-image: linear-gradient(
+    5deg,
+    #eb466b 50%,
+    #ea1d6f 60%,
+    #eb466b 50%
+  );
+  background-color: #eb466b;
+  background-size: 1em 1em;
+  background-repeat: space;
+  
+  animation: bgappear linear;
+  animation-timeline: view();
+  animation-range: entry cover 40%;
 }
