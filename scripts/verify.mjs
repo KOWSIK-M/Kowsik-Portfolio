@@ -56,6 +56,15 @@ try {
     fullPage: true,
   });
   await page.screenshot({ path: join(output, "hero-dark.png") });
+  await page
+    .locator("#projects")
+    .screenshot({ path: join(output, "projects-dark.png") });
+  await page
+    .locator("#about")
+    .screenshot({ path: join(output, "about-dark.png") });
+  await page
+    .locator("#contact")
+    .screenshot({ path: join(output, "contact-dark.png") });
 
   await page.getByRole("button", { name: /Switch to light theme/i }).click();
   check(
@@ -91,16 +100,67 @@ try {
     "gallery filter hides other categories",
   );
 
-  await page.getByRole("button", { name: /Send the access token/i }).click();
   check(
-    await page.getByText("Nice catch.").isVisible(),
-    "API challenge gives feedback",
+    (await page.getByText("Debug the API.").count()) === 0,
+    "quiz is removed",
   );
-  await page.getByRole("button", { name: /Next scenario/i }).click();
+  const reactNode = page.getByRole("button", { name: /Move React node/i });
+  const originalPosition = await reactNode.getAttribute("style");
+  await reactNode.focus();
+  await page.keyboard.press("ArrowRight");
   check(
-    await page.getByText("SCENARIO 02 / METHOD").isVisible(),
-    "API challenge advances",
+    (await reactNode.getAttribute("style")) !== originalPosition,
+    "hero node moves with keyboard",
   );
+  await page.getByRole("button", { name: "Reset draggable nodes" }).click();
+  check(
+    (await reactNode.getAttribute("style")) === originalPosition,
+    "hero nodes reset",
+  );
+
+  await page.getByRole("button", { name: "Open mini game" }).click();
+  check(await page.getByText("Mini Pong").isVisible(), "side game opens");
+  await page.getByRole("button", { name: "Play", exact: true }).click();
+  check(
+    await page.getByRole("button", { name: "Pause" }).isVisible(),
+    "Pong starts",
+  );
+  await page.getByRole("button", { name: "Pause" }).click();
+  await page.getByRole("button", { name: "Close mini game" }).first().click();
+
+  await page.route("**/api/chat", async (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        answer: "Kowsik builds Java and React products.",
+        sources: [
+          {
+            id: "identity",
+            title: "About Kowsik",
+            url: "https://github.com/KOWSIK-M",
+          },
+        ],
+      }),
+    }),
+  );
+  await page.getByRole("button", { name: "Open portfolio guide" }).click();
+  await page.getByRole("button", { name: "What has Kowsik built?" }).click();
+  await page
+    .getByText("Kowsik builds Java and React products.")
+    .waitFor({ state: "visible" });
+  check(
+    await page.getByText("Kowsik builds Java and React products.").isVisible(),
+    "chat answer renders",
+  );
+  check(
+    await page.getByRole("link", { name: /About Kowsik/ }).isVisible(),
+    "chat shows its source",
+  );
+  await page
+    .getByRole("button", { name: "Close portfolio guide" })
+    .first()
+    .click();
 
   await page.keyboard.press("Control+k");
   check(
@@ -171,6 +231,12 @@ try {
     (await small.evaluate(() => location.hash)) === "#contact",
     "mobile navigation reaches contact",
   );
+  await small.getByRole("button", { name: "Open mini game" }).click();
+  check(
+    await small.getByText("Mini Pong").isVisible(),
+    "Pong drawer fits mobile",
+  );
+  await small.getByRole("button", { name: "Close mini game" }).first().click();
   await small.screenshot({
     path: join(output, "mobile-dark.png"),
     fullPage: true,

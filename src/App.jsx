@@ -4,7 +4,6 @@ import {
   ArrowRight,
   ArrowUpRight,
   BookOpen,
-  Check,
   ChevronRight,
   Code2,
   Command,
@@ -15,9 +14,12 @@ import {
   RotateCcw,
   Send,
   Sun,
-  Terminal,
   X,
 } from "lucide-react";
+import DraggableWorld from "./components/DraggableWorld";
+import ActivityFeed from "./components/ActivityFeed";
+import PongDrawer from "./components/PongDrawer";
+import PortfolioChat from "./components/PortfolioChat";
 
 const GITHUB = "https://github.com/KOWSIK-M";
 const LINKEDIN = "https://www.linkedin.com/in/medam-kowsik-975479282/";
@@ -231,50 +233,6 @@ const resources = [
   },
 ];
 
-const challenges = [
-  {
-    label: "SCENARIO 01 / AUTH",
-    request: "GET /api/profile",
-    response: "401 Unauthorized",
-    prompt:
-      "The API works in Postman, but the signed-in web app gets 401. What should you check first?",
-    choices: [
-      "Send the access token in the Authorization header",
-      "Change the request to POST",
-      "Retry the request every second",
-    ],
-    answer: 0,
-    why: "A protected endpoint needs a valid bearer token on the request. Check the header and token expiry before changing the route.",
-  },
-  {
-    label: "SCENARIO 02 / METHOD",
-    request: "POST /api/products/42",
-    response: "405 Method Not Allowed",
-    prompt: "The route exists for reading product 42. What is the likely fix?",
-    choices: [
-      "Add a larger request body",
-      "Use GET for the read request",
-      "Clear the browser cache",
-    ],
-    answer: 1,
-    why: "405 means the path exists but does not accept that HTTP method. A read endpoint usually expects GET.",
-  },
-  {
-    label: "SCENARIO 03 / VALIDATION",
-    request: "POST /api/register",
-    response: "400 Bad Request",
-    prompt:
-      "A valid endpoint rejects a new signup payload. What is the best next step?",
-    choices: [
-      "Turn off all server validation",
-      "Treat 400 as success",
-      "Inspect validation errors and the request body",
-    ],
-    answer: 2,
-    why: "A 400 often means the server could not accept the payload. The response details and submitted fields show what needs fixing.",
-  },
-];
-
 function ExternalLinkButton({ href, children, className = "" }) {
   return (
     <a
@@ -395,84 +353,6 @@ function ProjectVisual({ type }) {
   );
 }
 
-function DebugChallenge() {
-  const [index, setIndex] = useState(0);
-  const [choice, setChoice] = useState(null);
-  const challenge = challenges[index];
-  const chooseNext = () => {
-    setIndex((index + 1) % challenges.length);
-    setChoice(null);
-  };
-  return (
-    <section id="challenge" className="section challenge-section">
-      <div className="container challenge-grid">
-        <div className="challenge-copy">
-          <div className="eyebrow">
-            <span className="eyebrow-dot" /> OPTIONAL SIDE QUEST
-          </div>
-          <h2>
-            Debug the <em>API.</em>
-          </h2>
-          <p>
-            Three quick situations from everyday web development. Pick the fix,
-            get feedback, and carry on exploring.
-          </p>
-          <div className="challenge-meta">
-            <Terminal size={18} />
-            <span>No account. No timer. Just one good decision.</span>
-          </div>
-        </div>
-        <div className="challenge-card">
-          <div className="challenge-head">
-            <span>{challenge.label}</span>
-            <span>0{index + 1} / 03</span>
-          </div>
-          <div className="request-line">
-            <span>{challenge.request}</span>
-            <strong>{challenge.response}</strong>
-          </div>
-          <h3>{challenge.prompt}</h3>
-          <div className="choice-list">
-            {challenge.choices.map((item, i) => (
-              <button
-                key={item}
-                type="button"
-                className={`choice ${choice === i ? (i === challenge.answer ? "correct" : "incorrect") : ""}`}
-                onClick={() => setChoice(i)}
-                disabled={choice !== null}
-              >
-                <span className="choice-key">
-                  {String.fromCharCode(65 + i)}
-                </span>
-                <span>{item}</span>
-                {choice === i &&
-                  (i === challenge.answer ? (
-                    <Check size={18} />
-                  ) : (
-                    <X size={18} />
-                  ))}
-              </button>
-            ))}
-          </div>
-          {choice !== null && (
-            <div className="feedback" role="status">
-              <strong>
-                {choice === challenge.answer
-                  ? "Nice catch."
-                  : "Close — try this path."}
-              </strong>
-              <p>{challenge.why}</p>
-              <button type="button" onClick={chooseNext}>
-                Next scenario <ArrowRight size={16} />
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function App() {
   const [theme, setTheme] = useState(() => {
     try {
@@ -524,13 +404,11 @@ function App() {
   const go = (href) => {
     setPaletteOpen(false);
     setMenuOpen(false);
-    document
-      .querySelector(href)
-      ?.scrollIntoView({
-        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-          ? "instant"
-          : "smooth",
-      });
+    document.querySelector(href)?.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "instant"
+        : "smooth",
+    });
   };
   return (
     <>
@@ -650,29 +528,10 @@ function App() {
                 <span>WORLD / 001</span>
                 <span>SCROLL TO EXPLORE ↓</span>
               </div>
-              <div className="world-main">
-                <div className="orbit orbit-one" />
-                <div className="orbit orbit-two" />
-                <div className="world-core">
-                  <span className="core-code">&lt;/&gt;</span>
-                  <span className="core-caption">IDEA → SYSTEM</span>
-                </div>
-                <div className="world-node node-react">
-                  <span>◈</span> React
-                </div>
-                <div className="world-node node-java">
-                  <span>☕</span> Java
-                </div>
-                <div className="world-node node-data">
-                  <span>▥</span> Data
-                </div>
-                <div className="world-star star-one">✦</div>
-                <div className="world-star star-two">✳</div>
-                <div className="world-star star-three">✦</div>
-              </div>
+              <DraggableWorld />
               <div className="world-footer">
                 <span className="world-indicator">
-                  <i /> SYSTEMS ONLINE
+                  <i /> DRAG THE NODES
                 </span>
                 <span>BUILD / LEARN / REPEAT</span>
               </div>
@@ -861,7 +720,6 @@ function App() {
             </div>
           </div>
         </section>
-        <DebugChallenge />
         <section id="skills" className="section skills-section">
           <div className="container">
             <div className="section-heading">
@@ -919,50 +777,53 @@ function App() {
                 Start a conversation <ArrowUpRight size={17} />
               </a>
             </div>
-            <div className="timeline">
-              <div className="timeline-item">
-                <span className="timeline-icon">
-                  <Code2 size={18} />
-                </span>
-                <div>
-                  <span className="timeline-date">FEB–MAY 2026</span>
-                  <h3>Program Analyst Intern</h3>
-                  <strong>Cognizant Technology Solutions</strong>
-                  <p>
-                    Hands-on Java full-stack and Angular training. Worked with a
-                    team on a Subscription Billing System in an agile
-                    environment.
-                  </p>
+            <div className="about-right">
+              <div className="timeline">
+                <div className="timeline-item">
+                  <span className="timeline-icon">
+                    <Code2 size={18} />
+                  </span>
+                  <div>
+                    <span className="timeline-date">FEB–MAY 2026</span>
+                    <h3>Program Analyst Intern</h3>
+                    <strong>Cognizant Technology Solutions</strong>
+                    <p>
+                      Hands-on Java full-stack and Angular training. Worked with
+                      a team on a Subscription Billing System in an agile
+                      environment.
+                    </p>
+                  </div>
+                </div>
+                <div className="timeline-item">
+                  <span className="timeline-icon">
+                    <BookOpen size={18} />
+                  </span>
+                  <div>
+                    <span className="timeline-date">2022–2026</span>
+                    <h3>B.Tech, Computer Science & Engineering</h3>
+                    <strong>KL University · Guntur</strong>
+                    <p>
+                      Specialized in Data Science and Big Data Analytics. Resume
+                      records a 9.55/10 CGPA.
+                    </p>
+                  </div>
+                </div>
+                <div className="timeline-item">
+                  <span className="timeline-icon">
+                    <RotateCcw size={18} />
+                  </span>
+                  <div>
+                    <span className="timeline-date">HOW I WORK</span>
+                    <h3>Make it useful. Then make it clear.</h3>
+                    <p>
+                      I like practical projects that connect technical decisions
+                      to a real user flow, with room to refine both the behavior
+                      and the interface.
+                    </p>
+                  </div>
                 </div>
               </div>
-              <div className="timeline-item">
-                <span className="timeline-icon">
-                  <BookOpen size={18} />
-                </span>
-                <div>
-                  <span className="timeline-date">2022–2026</span>
-                  <h3>B.Tech, Computer Science & Engineering</h3>
-                  <strong>KL University · Guntur</strong>
-                  <p>
-                    Specialized in Data Science and Big Data Analytics. Resume
-                    records a 9.55/10 CGPA.
-                  </p>
-                </div>
-              </div>
-              <div className="timeline-item">
-                <span className="timeline-icon">
-                  <RotateCcw size={18} />
-                </span>
-                <div>
-                  <span className="timeline-date">HOW I WORK</span>
-                  <h3>Make it useful. Then make it clear.</h3>
-                  <p>
-                    I like practical projects that connect technical decisions
-                    to a real user flow, with room to refine both the behavior
-                    and the interface.
-                  </p>
-                </div>
-              </div>
+              <ActivityFeed />
             </div>
           </div>
         </section>
@@ -1065,6 +926,8 @@ function App() {
           </div>
         </div>
       </footer>
+      <PongDrawer />
+      <PortfolioChat />
       {paletteOpen && (
         <div
           className="palette-backdrop"
@@ -1090,16 +953,14 @@ function App() {
               </button>
             </div>
             <div className="palette-options">
-              {[
-                ...nav,
-                { name: "Debug challenge", href: "#challenge" },
-                { name: "Student resources", href: "#resources" },
-              ].map((n) => (
-                <button key={n.name} onClick={() => go(n.href)}>
-                  <span>{n.name}</span>
-                  <ArrowRight size={17} />
-                </button>
-              ))}
+              {[...nav, { name: "Student resources", href: "#resources" }].map(
+                (n) => (
+                  <button key={n.name} onClick={() => go(n.href)}>
+                    <span>{n.name}</span>
+                    <ArrowRight size={17} />
+                  </button>
+                ),
+              )}
               <a
                 href={RESUME}
                 download="Medam_Kowsik_Resume.pdf"
