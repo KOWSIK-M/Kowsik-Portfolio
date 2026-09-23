@@ -31,6 +31,8 @@ export default function PongDrawer() {
   const [notice, setNotice] = useState("Move your paddle. First to five wins.");
   const canvasRef = useRef(null);
   const gameRef = useRef(initialGame());
+  const handleStartX = useRef(null);
+  const ignoreHandleClick = useRef(false);
 
   useEffect(() => {
     if (!open) return undefined;
@@ -169,7 +171,28 @@ export default function PongDrawer() {
         className="pong-handle"
         aria-label={open ? "Close mini game" : "Open mini game"}
         aria-expanded={open}
+        onPointerDown={(event) => {
+          ignoreHandleClick.current = false;
+          handleStartX.current = event.clientX;
+          event.currentTarget.setPointerCapture(event.pointerId);
+        }}
+        onPointerUp={(event) => {
+          if (handleStartX.current === null) return;
+          const distance = event.clientX - handleStartX.current;
+          handleStartX.current = null;
+          if (Math.abs(distance) < 35) return;
+          ignoreHandleClick.current = true;
+          setOpen(distance > 0);
+          setRunning(false);
+        }}
+        onPointerCancel={() => {
+          handleStartX.current = null;
+        }}
         onClick={() => {
+          if (ignoreHandleClick.current) {
+            ignoreHandleClick.current = false;
+            return;
+          }
           setOpen((value) => !value);
           setRunning(false);
         }}

@@ -118,6 +118,17 @@ try {
     "hero nodes reset",
   );
 
+  const handle = page.getByRole("button", { name: "Open mini game" });
+  const handleBox = await handle.boundingBox();
+  await page.mouse.move(handleBox.x + 14, handleBox.y + 20);
+  await page.mouse.down();
+  await page.mouse.move(handleBox.x + 120, handleBox.y + 20, { steps: 5 });
+  await page.mouse.up();
+  check(
+    await page.getByText("Mini Pong").isVisible(),
+    "side handle pulls open",
+  );
+  await page.getByRole("button", { name: "Close mini game" }).first().click();
   await page.getByRole("button", { name: "Open mini game" }).click();
   check(await page.getByText("Mini Pong").isVisible(), "side game opens");
   await page.getByRole("button", { name: "Play", exact: true }).click();
