@@ -18,7 +18,8 @@ Build with `npm run build`. Run the browser checks with `npm run test:e2e` while
 - React + Spring Boot CLI: [generator](https://github.com/KOWSIK-M/react-springboot-cli) and [frontend](https://github.com/KOWSIK-M/react-springboot-cli-frontend). The project panel and quick navigation adapt its terminal, configuration, and neon styling ideas without copying its component code.
 - LessRepeat: [public repository](https://github.com/KOWSIK-M/LessRepeat_VA), local source, and the resume. The public README describes its current MVP as optimized for local demos, so the portfolio does not claim a public live deployment.
 - WorkSkillAI: [frontend](https://github.com/KOWSIK-M/Skill-Gap-Analysis), [backend](https://github.com/KOWSIK-M/WorkSkillAI-Backend), and the resume.
-- Anjaneya Herbals and TempVault: local source projects; no public source or demo link is claimed.
+- Anjaneya Herbals: [repository](https://github.com/KOWSIK-M/ah---temp) and its [live storefront](https://anjaneya-herbals.vercel.app/). Local frontend and Spring Boot API source were also inspected.
+- TempVault: local source project; no public source or demo link is claimed.
 - BidX: [repository](https://github.com/KOWSIK-M/BidX) and its repository-linked live URL.
 
 The student resources are recommendations, with direct links. They are not presented as tools personally used in every project.
