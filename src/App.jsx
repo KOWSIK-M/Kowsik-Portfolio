@@ -476,6 +476,8 @@ function App() {
           </div>
         </div>
       </header>
+      <PongDrawer />
+      <PortfolioChat />
       <main id="main">
         <section id="top" className="hero">
           <div className="hero-grid" aria-hidden="true" />
@@ -926,8 +928,6 @@ function App() {
           </div>
         </div>
       </footer>
-      <PongDrawer />
-      <PortfolioChat />
       {paletteOpen && (
         <div
           className="palette-backdrop"
